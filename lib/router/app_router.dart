@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import '../screens/splash/splash_screen.dart';
 import '../screens/onboarding/onboarding_screen.dart';
 import '../screens/auth/login_screen.dart';
+import '../screens/auth/forgot_password_screen.dart';
 import '../screens/auth/signup_screen.dart';
 import '../screens/home/home_screen.dart';
 import '../screens/menu/menu_screen.dart';
@@ -49,6 +50,10 @@ class AppRouter {
       GoRoute(
         path: RouteNames.login,
         pageBuilder: (context, state) => _buildPage(state, const LoginScreen()),
+      ),
+      GoRoute(
+        path: RouteNames.forgotPassword,
+        pageBuilder: (context, state) => _buildPage(state, const ForgotPasswordScreen()),
       ),
       GoRoute(
         path: RouteNames.signup,
