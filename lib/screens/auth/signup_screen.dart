@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-import '../../core/theme/app_colors.dart';
+import 'package:lucide_icons/lucide_icons.dart';
 import '../../core/theme/app_typography.dart';
 import '../../providers/auth_provider.dart';
 import '../../router/route_names.dart';
-import '../../widgets/common/app_button.dart';
-import '../../widgets/common/app_text_field.dart';
+import 'steps/step_one.dart';
+import 'steps/step_two.dart';
+import 'steps/step_three.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
@@ -70,6 +70,38 @@ class _SignupScreenState extends State<SignupScreen> {
     super.dispose();
   }
 
+  Widget _buildStepCircle(int index) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final isActive = index == _currentStep;
+    final isCompleted = index < _currentStep;
+
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 300),
+      width: 28,
+      height: 28,
+      decoration: BoxDecoration(
+        color: isActive || isCompleted ? colorScheme.primary : colorScheme.surfaceContainerHighest,
+        shape: BoxShape.circle,
+      ),
+      child: Center(
+        child: isCompleted
+            ? Icon(
+                LucideIcons.check,
+                color: colorScheme.onPrimary,
+                size: 14,
+              )
+            : Text(
+                '${index + 1}',
+                style: TextStyle(
+                  color: isActive ? colorScheme.onPrimary : colorScheme.onSurfaceVariant,
+                  fontWeight: FontWeight.w600,
+                  fontSize: 12,
+                ),
+              ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -87,14 +119,40 @@ class _SignupScreenState extends State<SignupScreen> {
       ),
       body: Column(
         children: [
-          // Step indicator
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 16),
             child: Row(
-              children: List.generate(
-                3,
-                (i) => _StepDot(index: i, currentStep: _currentStep),
-              ),
+              children: [
+                _buildStepCircle(0),
+                Expanded(
+                  child: AnimatedContainer(
+                    duration: const Duration(milliseconds: 300),
+                    height: 2,
+                    margin: const EdgeInsets.symmetric(horizontal: 12),
+                    decoration: BoxDecoration(
+                      color: _currentStep > 0
+                          ? Theme.of(context).colorScheme.primary
+                          : Theme.of(context).colorScheme.outline,
+                      borderRadius: BorderRadius.circular(2),
+                    ),
+                  ),
+                ),
+                _buildStepCircle(1),
+                Expanded(
+                  child: AnimatedContainer(
+                    duration: const Duration(milliseconds: 300),
+                    height: 2,
+                    margin: const EdgeInsets.symmetric(horizontal: 12),
+                    decoration: BoxDecoration(
+                      color: _currentStep > 1
+                          ? Theme.of(context).colorScheme.primary
+                          : Theme.of(context).colorScheme.outline,
+                      borderRadius: BorderRadius.circular(2),
+                    ),
+                  ),
+                ),
+                _buildStepCircle(2),
+              ],
             ),
           ),
           Expanded(
@@ -102,17 +160,17 @@ class _SignupScreenState extends State<SignupScreen> {
               controller: _pageController,
               physics: const NeverScrollableScrollPhysics(),
               children: [
-                _StepOne(
+                StepOne(
                   nameController: _nameController,
                   emailController: _emailController,
                 ),
-                _StepTwo(
+                StepTwo(
                   passwordController: _passwordController,
                   obscure: _obscurePassword,
                   onToggleObscure: () =>
                       setState(() => _obscurePassword = !_obscurePassword),
                 ),
-                _StepThree(
+                StepThree(
                   acceptTerms: _acceptTerms,
                   onAcceptTerms: (v) =>
                       setState(() => _acceptTerms = v ?? false),
@@ -120,256 +178,37 @@ class _SignupScreenState extends State<SignupScreen> {
               ],
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(28),
-            child: AppButton.primary(
-              label: _currentStep == 2 ? 'Create Account' : 'Continue',
-              isLoading: _isLoading,
-              onTap: _isLoading ? null : _nextStep,
-            ),
-          ),
         ],
       ),
-    );
-  }
-}
-
-class _StepDot extends StatelessWidget {
-  final int index;
-  final int currentStep;
-
-  const _StepDot({required this.index, required this.currentStep});
-
-  @override
-  Widget build(BuildContext context) {
-    final isCompleted = index < currentStep;
-    final isActive = index == currentStep;
-
-    return Expanded(
-      child: Container(
-        margin: EdgeInsets.only(right: index < 2 ? 8 : 0),
-        child: Row(
-          children: [
-            AnimatedContainer(
-              duration: const Duration(milliseconds: 300),
-              width: 28,
-              height: 28,
-              decoration: BoxDecoration(
-                color: isCompleted || isActive
-                    ? AppColors.primaryGreen
-                    : AppColors.divider,
-                shape: BoxShape.circle,
-              ),
-              child: Center(
-                child: isCompleted
-                    ? const Icon(
-                        Icons.check_rounded,
-                        color: Colors.white,
-                        size: 14,
-                      )
-                    : Text(
-                        '${index + 1}',
-                        style: TextStyle(
-                          color: isActive ? Colors.white : AppColors.textHint,
-                          fontWeight: FontWeight.w600,
-                          fontSize: 12,
-                        ),
-                      ),
-              ),
-            ),
-            if (index < 2)
-              Expanded(
-                child: AnimatedContainer(
-                  duration: const Duration(milliseconds: 300),
-                  height: 2,
-                  color: isCompleted
-                      ? AppColors.primaryGreen
-                      : AppColors.divider,
+      bottomNavigationBar: SafeArea(
+        minimum: const EdgeInsets.only(bottom: 12),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          child: SizedBox(
+            width: double.infinity,
+            height: 56,
+            child: FilledButton(
+              onPressed: _isLoading ? null : _nextStep,
+              style: FilledButton.styleFrom(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
                 ),
               ),
-          ],
+              child: _isLoading
+                  ? SizedBox(
+                      height: 20,
+                      width: 20,
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2,
+                        color: Theme.of(context).colorScheme.onPrimary,
+                      ),
+                    )
+                  : Text(_currentStep == 2 ? 'Create Account' : 'Continue'),
+            ),
+          ),
         ),
       ),
     );
   }
 }
 
-class _StepOne extends StatelessWidget {
-  final TextEditingController nameController;
-  final TextEditingController emailController;
-
-  const _StepOne({required this.nameController, required this.emailController});
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 28),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            "What's your name?",
-            style: AppTypography.headingLarge(context),
-          ).animate().fadeIn().slideY(begin: 0.2, end: 0),
-          const SizedBox(height: 8),
-          Text(
-            'We\'d love to personalize your experience.',
-            style: AppTypography.bodyMedium(
-              context,
-            ).copyWith(color: AppColors.textSecondary),
-          ).animate(delay: 50.ms).fadeIn(),
-          const SizedBox(height: 32),
-          AppTextField(
-            label: 'Full Name',
-            hint: 'CC Jr',
-            controller: nameController,
-            prefix: const Icon(
-              Icons.person_outline,
-              color: AppColors.textSecondary,
-              size: 20,
-            ),
-          ).animate(delay: 100.ms).fadeIn().slideX(begin: -0.1, end: 0),
-          const SizedBox(height: 16),
-          AppTextField(
-            label: 'Email',
-            hint: 'you@example.com',
-            controller: emailController,
-            keyboardType: TextInputType.emailAddress,
-            prefix: const Icon(
-              Icons.email_outlined,
-              color: AppColors.textSecondary,
-              size: 20,
-            ),
-          ).animate(delay: 150.ms).fadeIn().slideX(begin: -0.1, end: 0),
-        ],
-      ),
-    );
-  }
-}
-
-class _StepTwo extends StatelessWidget {
-  final TextEditingController passwordController;
-  final bool obscure;
-  final VoidCallback onToggleObscure;
-
-  const _StepTwo({
-    required this.passwordController,
-    required this.obscure,
-    required this.onToggleObscure,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 28),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Create a password',
-            style: AppTypography.headingLarge(context),
-          ).animate().fadeIn().slideY(begin: 0.2, end: 0),
-          const SizedBox(height: 8),
-          Text(
-            'At least 8 characters with a number.',
-            style: AppTypography.bodyMedium(
-              context,
-            ).copyWith(color: AppColors.textSecondary),
-          ).animate(delay: 50.ms).fadeIn(),
-          const SizedBox(height: 32),
-          AppTextField(
-            label: 'Password',
-            hint: '••••••••',
-            controller: passwordController,
-            obscureText: obscure,
-            prefix: const Icon(
-              Icons.lock_outline_rounded,
-              color: AppColors.textSecondary,
-              size: 20,
-            ),
-            suffix: IconButton(
-              icon: Icon(
-                obscure
-                    ? Icons.visibility_off_outlined
-                    : Icons.visibility_outlined,
-                color: AppColors.textSecondary,
-                size: 20,
-              ),
-              onPressed: onToggleObscure,
-            ),
-          ).animate(delay: 100.ms).fadeIn().slideX(begin: -0.1, end: 0),
-        ],
-      ),
-    );
-  }
-}
-
-class _StepThree extends StatelessWidget {
-  final bool acceptTerms;
-  final ValueChanged<bool?> onAcceptTerms;
-
-  const _StepThree({required this.acceptTerms, required this.onAcceptTerms});
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 28),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Almost there!',
-            style: AppTypography.headingLarge(context),
-          ).animate().fadeIn().slideY(begin: 0.2, end: 0),
-          const SizedBox(height: 8),
-          Text(
-            'Review and accept our terms.',
-            style: AppTypography.bodyMedium(
-              context,
-            ).copyWith(color: AppColors.textSecondary),
-          ).animate(delay: 50.ms).fadeIn(),
-          const SizedBox(height: 32),
-          Container(
-            padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              color: AppColors.surface,
-              borderRadius: BorderRadius.circular(16),
-            ),
-            child: Row(
-              children: [
-                Checkbox(
-                  value: acceptTerms,
-                  onChanged: onAcceptTerms,
-                  activeColor: AppColors.primaryGreen,
-                ),
-                Expanded(
-                  child: RichText(
-                    text: TextSpan(
-                      text: 'I agree to the ',
-                      style: AppTypography.bodyMedium(context),
-                      children: [
-                        TextSpan(
-                          text: 'Terms of Service',
-                          style: AppTypography.bodyMedium(
-                            context,
-                          ).copyWith(color: AppColors.primaryGreen),
-                        ),
-                        const TextSpan(text: ' and '),
-                        TextSpan(
-                          text: 'Privacy Policy',
-                          style: AppTypography.bodyMedium(
-                            context,
-                          ).copyWith(color: AppColors.primaryGreen),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ).animate(delay: 100.ms).fadeIn(),
-        ],
-      ),
-    );
-  }
-}

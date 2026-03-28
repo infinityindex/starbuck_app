@@ -52,7 +52,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
         context.read<CartProvider>().addItem(widget.drink, size: _selectedSize);
       }
       setState(() => _isAdding = false);
-      
+
       // Show success notification
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -62,13 +62,17 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
               const SizedBox(width: 12),
               Text(
                 '$_quantity item${_quantity > 1 ? 's' : ''} added to cart',
-                style: AppTypography.labelMedium(context).copyWith(color: Colors.white),
+                style: AppTypography.labelMedium(
+                  context,
+                ).copyWith(color: Colors.white),
               ),
             ],
           ),
           backgroundColor: AppColors.primaryGreen,
           behavior: SnackBarBehavior.floating,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
           margin: const EdgeInsets.all(16),
           duration: const Duration(milliseconds: 2000),
         ),
@@ -79,7 +83,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   @override
   Widget build(BuildContext context) {
     final cartItemCount = context.watch<CartProvider>().totalItems;
-    
+
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       extendBodyBehindAppBar: true,
@@ -96,7 +100,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                     child: CachedNetworkImage(
                       imageUrl: widget.drink.imageUrl,
                       fit: BoxFit.cover,
-                      errorWidget: (_, __, ___) => Container(color: AppColors.primaryGreenLight),
+                      errorWidget: (_, _, _) =>
+                          Container(color: AppColors.primaryGreenLight),
                     ),
                   ),
                   // Modern gradient overlay for visibility
@@ -148,14 +153,19 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                     top: MediaQuery.of(context).padding.top + 70,
                     left: 20,
                     child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 12,
+                        vertical: 6,
+                      ),
                       decoration: BoxDecoration(
                         color: AppColors.secondaryGold,
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: Text(
                         widget.drink.category,
-                        style: AppTypography.labelSmall(context).copyWith(color: Colors.white),
+                        style: AppTypography.labelSmall(
+                          context,
+                        ).copyWith(color: Colors.white),
                       ),
                     ),
                   ),
@@ -170,7 +180,9 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             child: Container(
               decoration: BoxDecoration(
                 color: Theme.of(context).scaffoldBackgroundColor,
-                borderRadius: const BorderRadius.vertical(top: Radius.circular(32)),
+                borderRadius: const BorderRadius.vertical(
+                  top: Radius.circular(32),
+                ),
               ),
               child: SingleChildScrollView(
                 padding: const EdgeInsets.all(24),
@@ -188,16 +200,26 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                           ).animate().fadeIn(),
                         ),
                         Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 12,
+                            vertical: 6,
+                          ),
                           decoration: BoxDecoration(
                             color: AppColors.primaryGreenLight,
                             borderRadius: BorderRadius.circular(12),
                           ),
                           child: Row(
                             children: [
-                              const Icon(Icons.star_rounded, color: AppColors.starGold, size: 16),
+                              const Icon(
+                                Icons.star_rounded,
+                                color: AppColors.starGold,
+                                size: 16,
+                              ),
                               const SizedBox(width: 4),
-                              Text(widget.drink.rating.toStringAsFixed(1), style: AppTypography.labelSmall(context)),
+                              Text(
+                                widget.drink.rating.toStringAsFixed(1),
+                                style: AppTypography.labelSmall(context),
+                              ),
                             ],
                           ),
                         ).animate().fadeIn(delay: 50.ms),
@@ -207,16 +229,18 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                     Text(
                       widget.drink.description,
                       style: AppTypography.bodyMedium(context).copyWith(
-                        color: Theme.of(context).brightness == Brightness.dark 
-                            ? Colors.white70 
+                        color: Theme.of(context).brightness == Brightness.dark
+                            ? Colors.white70
                             : AppColors.textSecondary,
                       ),
                     ).animate().fadeIn(delay: 100.ms),
                     const SizedBox(height: 24),
 
                     // Size selector
-                    Text('Size', style: AppTypography.labelLarge(context))
-                        .animate().fadeIn(delay: 150.ms),
+                    Text(
+                      'Size',
+                      style: AppTypography.labelLarge(context),
+                    ).animate().fadeIn(delay: 150.ms),
                     const SizedBox(height: 12),
                     Row(
                       children: _sizes.map((size) {
@@ -226,19 +250,29 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                           child: AnimatedContainer(
                             duration: const Duration(milliseconds: 200),
                             margin: const EdgeInsets.only(right: 12),
-                            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 20,
+                              vertical: 12,
+                            ),
                             decoration: BoxDecoration(
-                              color: isSelected ? AppColors.primaryGreen : Theme.of(context).colorScheme.surface,
+                              color: isSelected
+                                  ? AppColors.primaryGreen
+                                  : Theme.of(context).colorScheme.surface,
                               borderRadius: BorderRadius.circular(16),
                               border: Border.all(
-                                color: isSelected ? AppColors.primaryGreen : AppColors.divider,
+                                color: isSelected
+                                    ? AppColors.primaryGreen
+                                    : AppColors.divider,
                               ),
                             ),
                             child: Text(
                               size,
-                              style: AppTypography.labelMedium(context).copyWith(
-                                color: isSelected ? Colors.white : AppColors.textSecondary,
-                              ),
+                              style: AppTypography.labelMedium(context)
+                                  .copyWith(
+                                    color: isSelected
+                                        ? Colors.white
+                                        : AppColors.textSecondary,
+                                  ),
                             ),
                           ),
                         );
@@ -248,8 +282,10 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                     const SizedBox(height: 24),
 
                     // Quantity selector
-                    Text('Quantity', style: AppTypography.labelLarge(context))
-                        .animate().fadeIn(delay: 220.ms),
+                    Text(
+                      'Quantity',
+                      style: AppTypography.labelLarge(context),
+                    ).animate().fadeIn(delay: 220.ms),
                     const SizedBox(height: 12),
                     _QuantitySelector(
                       quantity: _quantity,
@@ -269,8 +305,10 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                             Text(
                               'Total Price',
                               style: AppTypography.bodySmall(context).copyWith(
-                                color: Theme.of(context).brightness == Brightness.dark 
-                                    ? Colors.white54 
+                                color:
+                                    Theme.of(context).brightness ==
+                                        Brightness.dark
+                                    ? Colors.white54
                                     : AppColors.textHint,
                               ),
                             ),
@@ -308,18 +346,29 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                       borderRadius: BorderRadius.circular(30),
                                       boxShadow: [
                                         BoxShadow(
-                                          color: AppColors.primaryGreen.withValues(alpha: 0.3),
+                                          color: AppColors.primaryGreen
+                                              .withValues(alpha: 0.3),
                                           blurRadius: 12,
                                           offset: const Offset(0, 4),
                                         ),
                                       ],
                                     ),
                                     child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
-                                        const Icon(Icons.add_shopping_cart, color: Colors.white, size: 20),
+                                        const Icon(
+                                          Icons.add_shopping_cart,
+                                          color: Colors.white,
+                                          size: 20,
+                                        ),
                                         const SizedBox(width: 8),
-                                        Text('Add to Cart', style: AppTypography.labelMedium(context).copyWith(color: Colors.white)),
+                                        Text(
+                                          'Add to Cart',
+                                          style: AppTypography.labelMedium(
+                                            context,
+                                          ).copyWith(color: Colors.white),
+                                        ),
                                       ],
                                     ),
                                   ),
@@ -339,10 +388,21 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          _NutritionItem(label: 'Calories', value: '${widget.drink.calories}'),
-                          Container(width: 1, height: 40, color: AppColors.divider),
+                          _NutritionItem(
+                            label: 'Calories',
+                            value: '${widget.drink.calories}',
+                          ),
+                          Container(
+                            width: 1,
+                            height: 40,
+                            color: AppColors.divider,
+                          ),
                           _NutritionItem(label: 'Protein', value: '8g'),
-                          Container(width: 1, height: 40, color: AppColors.divider),
+                          Container(
+                            width: 1,
+                            height: 40,
+                            color: AppColors.divider,
+                          ),
                           _NutritionItem(label: 'Caffeine', value: '75mg'),
                         ],
                       ),
@@ -426,14 +486,20 @@ class _ModernCartButton extends StatelessWidget {
           clipBehavior: Clip.none,
           children: [
             const Center(
-              child: Icon(Icons.shopping_bag_outlined, color: Colors.white, size: 22),
+              child: Icon(
+                Icons.shopping_bag_outlined,
+                color: Colors.white,
+                size: 22,
+              ),
             ),
             if (itemCount > 0)
               Positioned(
                 top: -6,
                 right: -6,
                 child: Container(
-                  constraints: BoxConstraints(minWidth: itemCount > 9 ? 22 : 20),
+                  constraints: BoxConstraints(
+                    minWidth: itemCount > 9 ? 22 : 20,
+                  ),
                   height: 20,
                   padding: const EdgeInsets.symmetric(horizontal: 6),
                   decoration: BoxDecoration(
@@ -520,14 +586,20 @@ class _CartButton extends StatelessWidget {
           clipBehavior: Clip.none,
           children: [
             const Center(
-              child: Icon(Icons.shopping_bag_outlined, color: Colors.white, size: 20),
+              child: Icon(
+                Icons.shopping_bag_outlined,
+                color: Colors.white,
+                size: 20,
+              ),
             ),
             if (itemCount > 0)
               Positioned(
                 top: -4,
                 right: -4,
                 child: Container(
-                  constraints: BoxConstraints(minWidth: itemCount > 9 ? 20 : 18),
+                  constraints: BoxConstraints(
+                    minWidth: itemCount > 9 ? 20 : 18,
+                  ),
                   height: 18,
                   padding: const EdgeInsets.symmetric(horizontal: 5),
                   decoration: BoxDecoration(
@@ -644,7 +716,12 @@ class _NutritionItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text(value, style: AppTypography.labelLarge(context).copyWith(color: AppColors.primaryGreen)),
+        Text(
+          value,
+          style: AppTypography.labelLarge(
+            context,
+          ).copyWith(color: AppColors.primaryGreen),
+        ),
         const SizedBox(height: 2),
         Text(label, style: AppTypography.caption(context)),
       ],

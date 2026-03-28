@@ -11,7 +11,8 @@ class NotificationsScreen extends StatefulWidget {
   State<NotificationsScreen> createState() => _NotificationsScreenState();
 }
 
-class _NotificationsScreenState extends State<NotificationsScreen> with SingleTickerProviderStateMixin {
+class _NotificationsScreenState extends State<NotificationsScreen>
+    with SingleTickerProviderStateMixin {
   late TabController _tabController;
 
   @override
@@ -31,7 +32,10 @@ class _NotificationsScreenState extends State<NotificationsScreen> with SingleTi
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        title: Text('Notifications', style: AppTypography.headingMedium(context)),
+        title: Text(
+          'Notifications',
+          style: AppTypography.headingMedium(context),
+        ),
         bottom: TabBar(
           controller: _tabController,
           labelStyle: AppTypography.labelMedium(context),
@@ -47,16 +51,15 @@ class _NotificationsScreenState extends State<NotificationsScreen> with SingleTi
       ),
       body: TabBarView(
         controller: _tabController,
-        children: [
-          _buildOffersList(),
-          _buildOrderUpdatesList(),
-        ],
+        children: [_buildOffersList(), _buildOrderUpdatesList()],
       ),
     );
   }
 
   Widget _buildOffersList() {
-    final offers = mockNotifications.where((n) => n.type == 'offer' || n.type == 'promo').toList();
+    final offers = mockNotifications
+        .where((n) => n.type == 'offer' || n.type == 'promo')
+        .toList();
 
     if (offers.isEmpty) {
       return const _EmptyState();
@@ -67,10 +70,9 @@ class _NotificationsScreenState extends State<NotificationsScreen> with SingleTi
       itemCount: offers.length,
       itemBuilder: (context, index) {
         final notification = offers[index];
-        return _NotificationCard(notification: notification)
-            .animate(delay: (index * 50).ms)
-            .fadeIn()
-            .slideY(begin: 0.1, end: 0);
+        return _NotificationCard(
+          notification: notification,
+        ).animate(delay: (index * 50).ms).fadeIn().slideY(begin: 0.1, end: 0);
       },
     );
   }
@@ -87,10 +89,9 @@ class _NotificationsScreenState extends State<NotificationsScreen> with SingleTi
       itemCount: orders.length,
       itemBuilder: (context, index) {
         final notification = orders[index];
-        return _NotificationCard(notification: notification)
-            .animate(delay: (index * 50).ms)
-            .fadeIn()
-            .slideY(begin: 0.1, end: 0);
+        return _NotificationCard(
+          notification: notification,
+        ).animate(delay: (index * 50).ms).fadeIn().slideY(begin: 0.1, end: 0);
       },
     );
   }
@@ -105,11 +106,20 @@ class _EmptyState extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Icon(Icons.notifications_none_rounded, size: 64, color: AppColors.textHint),
+          const Icon(
+            Icons.notifications_none_rounded,
+            size: 64,
+            color: AppColors.textHint,
+          ),
           const SizedBox(height: 16),
           Text('No notifications', style: AppTypography.headingMedium(context)),
           const SizedBox(height: 8),
-          Text('You\'re all caught up!', style: AppTypography.bodyMedium(context).copyWith(color: AppColors.textSecondary)),
+          Text(
+            'You\'re all caught up!',
+            style: AppTypography.bodyMedium(
+              context,
+            ).copyWith(color: AppColors.textSecondary),
+          ),
         ],
       ),
     );
@@ -127,7 +137,9 @@ class _NotificationCard extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 12),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: notification.isRead ? AppColors.surface : AppColors.primaryGreenLight,
+        color: notification.isRead
+            ? AppColors.surface
+            : AppColors.primaryGreenLight,
         borderRadius: BorderRadius.circular(16),
       ),
       child: Row(
@@ -146,10 +158,16 @@ class _NotificationCard extends StatelessWidget {
                     child: Image.network(
                       notification.imageUrl,
                       fit: BoxFit.cover,
-                      errorBuilder: (_, __, ___) => const Icon(Icons.local_offer_rounded, color: AppColors.primaryGreen),
+                      errorBuilder: (_, _, _) => const Icon(
+                        Icons.local_offer_rounded,
+                        color: AppColors.primaryGreen,
+                      ),
                     ),
                   )
-                : const Icon(Icons.notifications_rounded, color: AppColors.primaryGreen),
+                : const Icon(
+                    Icons.notifications_rounded,
+                    color: AppColors.primaryGreen,
+                  ),
           ),
           const SizedBox(width: 12),
           // Content
@@ -166,7 +184,9 @@ class _NotificationCard extends StatelessWidget {
                 const SizedBox(height: 2),
                 Text(
                   notification.body,
-                  style: AppTypography.bodySmall(context).copyWith(color: AppColors.textSecondary),
+                  style: AppTypography.bodySmall(
+                    context,
+                  ).copyWith(color: AppColors.textSecondary),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),

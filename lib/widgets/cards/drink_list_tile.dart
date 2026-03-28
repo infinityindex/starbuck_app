@@ -24,7 +24,7 @@ class DrinkListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    
+
     return GestureDetector(
       onTap: onTap,
       child: Container(
@@ -48,7 +48,9 @@ class DrinkListTile extends StatelessWidget {
                     Text(
                       drink.description,
                       style: AppTypography.bodySmall(context).copyWith(
-                        color: isDark ? Colors.white70 : AppColors.textSecondary,
+                        color: isDark
+                            ? Colors.white70
+                            : AppColors.textSecondary,
                       ),
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
@@ -57,7 +59,9 @@ class DrinkListTile extends StatelessWidget {
                     Text(
                       drink.category,
                       style: AppTypography.bodySmall(context).copyWith(
-                        color: isDark ? Colors.white70 : AppColors.textSecondary,
+                        color: isDark
+                            ? Colors.white70
+                            : AppColors.textSecondary,
                       ),
                     ),
                   const SizedBox(height: 6),
@@ -81,7 +85,7 @@ class DrinkListTile extends StatelessWidget {
           width: 80,
           height: 80,
           fit: BoxFit.cover,
-          errorBuilder: (_, __, ___) => Container(
+          errorBuilder: (_, _, _) => Container(
             width: 80,
             height: 80,
             color: AppColors.primaryGreenLight,
@@ -95,15 +99,25 @@ class DrinkListTile extends StatelessWidget {
   Widget _buildPriceRow(BuildContext context) {
     return Row(
       children: [
-        Text('\$${drink.price.toStringAsFixed(2)}', style: AppTypography.price(context)),
+        Text(
+          '\$${drink.price.toStringAsFixed(2)}',
+          style: AppTypography.price(context),
+        ),
         const Spacer(),
         if (showRating)
           Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Icon(Icons.star_rounded, color: AppColors.starGold, size: 14),
+              const Icon(
+                Icons.star_rounded,
+                color: AppColors.starGold,
+                size: 14,
+              ),
               const SizedBox(width: 2),
-              Text(drink.rating.toStringAsFixed(1), style: AppTypography.caption(context)),
+              Text(
+                drink.rating.toStringAsFixed(1),
+                style: AppTypography.caption(context),
+              ),
             ],
           ),
       ],

@@ -21,12 +21,20 @@ class RewardsScreen extends StatelessWidget {
               // Header with progress
               SliverToBoxAdapter(
                 child: Container(
-                  padding: EdgeInsets.fromLTRB(24, MediaQuery.of(context).padding.top + 16, 24, 32),
+                  padding: EdgeInsets.fromLTRB(
+                    24,
+                    MediaQuery.of(context).padding.top + 16,
+                    24,
+                    32,
+                  ),
                   decoration: const BoxDecoration(
                     gradient: LinearGradient(
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
-                      colors: [AppColors.primaryGreenDark, AppColors.primaryGreen],
+                      colors: [
+                        AppColors.primaryGreenDark,
+                        AppColors.primaryGreen,
+                      ],
                     ),
                   ),
                   child: Column(
@@ -34,22 +42,36 @@ class RewardsScreen extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text('Rewards', style: AppTypography.headingLarge(context).copyWith(color: Colors.white)),
+                          Text(
+                            'Rewards',
+                            style: AppTypography.headingLarge(
+                              context,
+                            ).copyWith(color: Colors.white),
+                          ),
                           GestureDetector(
                             onTap: () => _showRedeemedRewards(context, rewards),
                             child: Container(
-                              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 12,
+                                vertical: 6,
+                              ),
                               decoration: BoxDecoration(
                                 color: Colors.white.withValues(alpha: 0.2),
                                 borderRadius: BorderRadius.circular(12),
                               ),
                               child: Row(
                                 children: [
-                                  const Icon(Icons.card_giftcard, color: Colors.white, size: 16),
+                                  const Icon(
+                                    Icons.card_giftcard,
+                                    color: Colors.white,
+                                    size: 16,
+                                  ),
                                   const SizedBox(width: 6),
                                   Text(
                                     'My Rewards',
-                                    style: AppTypography.labelSmall(context).copyWith(color: Colors.white),
+                                    style: AppTypography.labelSmall(
+                                      context,
+                                    ).copyWith(color: Colors.white),
                                   ),
                                 ],
                               ),
@@ -60,7 +82,10 @@ class RewardsScreen extends StatelessWidget {
                       const SizedBox(height: 24),
                       // Progress ring
                       TweenAnimationBuilder<double>(
-                        tween: Tween(begin: 0.0, end: rewards.progressToNextTier),
+                        tween: Tween(
+                          begin: 0.0,
+                          end: rewards.progressToNextTier,
+                        ),
                         duration: const Duration(milliseconds: 1500),
                         curve: Curves.easeOutCubic,
                         builder: (context, value, child) {
@@ -74,34 +99,51 @@ class RewardsScreen extends StatelessWidget {
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
                                     TweenAnimationBuilder<double>(
-                                      tween: Tween(begin: 0, end: rewards.stars.toDouble()),
-                                      duration: const Duration(milliseconds: 1800),
+                                      tween: Tween(
+                                        begin: 0,
+                                        end: rewards.stars.toDouble(),
+                                      ),
+                                      duration: const Duration(
+                                        milliseconds: 1800,
+                                      ),
                                       curve: Curves.easeOutCubic,
                                       builder: (context, stars, _) {
                                         return Text(
                                           stars.toInt().toString(),
-                                          style: AppTypography.displayLarge(context).copyWith(
-                                            color: Colors.white,
-                                            fontSize: 48,
-                                          ),
+                                          style:
+                                              AppTypography.displayLarge(
+                                                context,
+                                              ).copyWith(
+                                                color: Colors.white,
+                                                fontSize: 48,
+                                              ),
                                         );
                                       },
                                     ),
                                     Row(
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
-                                        const Icon(Icons.star_rounded, color: AppColors.starGold, size: 16),
+                                        const Icon(
+                                          Icons.star_rounded,
+                                          color: AppColors.starGold,
+                                          size: 16,
+                                        ),
                                         const SizedBox(width: 4),
                                         Text(
                                           'Stars',
-                                          style: AppTypography.labelMedium(context).copyWith(color: Colors.white70),
+                                          style: AppTypography.labelMedium(
+                                            context,
+                                          ).copyWith(color: Colors.white70),
                                         ),
                                       ],
                                     ),
                                     const SizedBox(height: 4),
                                     Text(
                                       rewards.tier,
-                                      style: AppTypography.bodySmall(context).copyWith(color: AppColors.secondaryGold),
+                                      style: AppTypography.bodySmall(context)
+                                          .copyWith(
+                                            color: AppColors.secondaryGold,
+                                          ),
                                     ),
                                   ],
                                 ),
@@ -114,12 +156,16 @@ class RewardsScreen extends StatelessWidget {
                       if (rewards.starsToNextTier > 0)
                         Text(
                           '${rewards.starsToNextTier} stars to next level',
-                          style: AppTypography.bodyMedium(context).copyWith(color: Colors.white70),
+                          style: AppTypography.bodyMedium(
+                            context,
+                          ).copyWith(color: Colors.white70),
                         ).animate().fadeIn(delay: 300.ms)
                       else
                         Text(
                           'You\'re at maximum tier! 🎉',
-                          style: AppTypography.bodyMedium(context).copyWith(color: Colors.white70),
+                          style: AppTypography.bodyMedium(
+                            context,
+                          ).copyWith(color: Colors.white70),
                         ).animate().fadeIn(delay: 300.ms),
                     ],
                   ),
@@ -130,25 +176,28 @@ class RewardsScreen extends StatelessWidget {
               SliverToBoxAdapter(
                 child: Padding(
                   padding: const EdgeInsets.all(20),
-                  child: Text('Redeem Rewards', style: AppTypography.headingMedium(context))
-                      .animate().fadeIn(delay: 200.ms),
+                  child: Text(
+                    'Redeem Rewards',
+                    style: AppTypography.headingMedium(context),
+                  ).animate().fadeIn(delay: 200.ms),
                 ),
               ),
 
               SliverPadding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 sliver: SliverList(
-                  delegate: SliverChildBuilderDelegate(
-                    (context, index) {
-                      final reward = rewards.availableRewards[index];
-                      return _RewardCard(
-                        reward: reward,
-                        userStars: rewards.stars,
-                        onRedeem: () => _showRedeemConfirmation(context, reward, rewards),
-                      ).animate(delay: (index * 80).ms).fadeIn().slideY(begin: 0.15, end: 0);
-                    },
-                    childCount: rewards.availableRewards.length,
-                  ),
+                  delegate: SliverChildBuilderDelegate((context, index) {
+                    final reward = rewards.availableRewards[index];
+                    return _RewardCard(
+                          reward: reward,
+                          userStars: rewards.stars,
+                          onRedeem: () =>
+                              _showRedeemConfirmation(context, reward, rewards),
+                        )
+                        .animate(delay: (index * 80).ms)
+                        .fadeIn()
+                        .slideY(begin: 0.15, end: 0);
+                  }, childCount: rewards.availableRewards.length),
                 ),
               ),
 
@@ -160,13 +209,19 @@ class RewardsScreen extends StatelessWidget {
     );
   }
 
-  void _showRedeemConfirmation(BuildContext context, RewardModel reward, RewardsProvider rewards) {
+  void _showRedeemConfirmation(
+    BuildContext context,
+    RewardModel reward,
+    RewardsProvider rewards,
+  ) {
     if (!rewards.canRedeem(reward)) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
             'Not enough stars to redeem this reward',
-            style: AppTypography.labelMedium(context).copyWith(color: Colors.white),
+            style: AppTypography.labelMedium(
+              context,
+            ).copyWith(color: Colors.white),
           ),
           backgroundColor: AppColors.error,
           behavior: SnackBarBehavior.floating,
@@ -192,13 +247,15 @@ class RewardsScreen extends StatelessWidget {
     );
   }
 
-  void _showRedeemSuccess(BuildContext context, RewardModel reward, int remainingStars) {
+  void _showRedeemSuccess(
+    BuildContext context,
+    RewardModel reward,
+    int remainingStars,
+  ) {
     showDialog(
       context: context,
-      builder: (context) => _RedeemSuccessDialog(
-        reward: reward,
-        remainingStars: remainingStars,
-      ),
+      builder: (context) =>
+          _RedeemSuccessDialog(reward: reward, remainingStars: remainingStars),
     );
   }
 
@@ -248,7 +305,8 @@ class _ProgressRingPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(covariant _ProgressRingPainter old) => progress != old.progress;
+  bool shouldRepaint(covariant _ProgressRingPainter old) =>
+      progress != old.progress;
 }
 
 class _RewardCard extends StatelessWidget {
@@ -277,7 +335,10 @@ class _RewardCard extends StatelessWidget {
           color: Theme.of(context).colorScheme.surface,
           borderRadius: BorderRadius.circular(20),
           border: isAvailable && canAfford
-              ? Border.all(color: AppColors.primaryGreen.withValues(alpha: 0.3), width: 1.5)
+              ? Border.all(
+                  color: AppColors.primaryGreen.withValues(alpha: 0.3),
+                  width: 1.5,
+                )
               : Border.all(color: AppColors.divider),
         ),
         child: Row(
@@ -289,7 +350,9 @@ class _RewardCard extends StatelessWidget {
               decoration: BoxDecoration(
                 color: isAvailable && canAfford
                     ? AppColors.primaryGreenLight
-                    : (isDark ? Colors.white12 : AppColors.divider.withValues(alpha: 0.3)),
+                    : (isDark
+                          ? Colors.white12
+                          : AppColors.divider.withValues(alpha: 0.3)),
                 borderRadius: BorderRadius.circular(16),
               ),
               child: isAvailable && canAfford
@@ -298,7 +361,10 @@ class _RewardCard extends StatelessWidget {
                       child: Image.network(
                         reward.imageUrl,
                         fit: BoxFit.cover,
-                        errorBuilder: (_, __, ___) => const Icon(Icons.local_cafe, color: AppColors.primaryGreen),
+                        errorBuilder: (_, _, _) => const Icon(
+                          Icons.local_cafe,
+                          color: AppColors.primaryGreen,
+                        ),
                       ),
                     )
                   : Icon(
@@ -332,12 +398,18 @@ class _RewardCard extends StatelessWidget {
                   const SizedBox(height: 8),
                   Row(
                     children: [
-                      const Icon(Icons.star_rounded, color: AppColors.starGold, size: 14),
+                      const Icon(
+                        Icons.star_rounded,
+                        color: AppColors.starGold,
+                        size: 14,
+                      ),
                       const SizedBox(width: 4),
                       Text(
                         '${reward.starCost} Stars',
                         style: AppTypography.labelSmall(context).copyWith(
-                          color: canAfford ? AppColors.primaryGreen : AppColors.error,
+                          color: canAfford
+                              ? AppColors.primaryGreen
+                              : AppColors.error,
                         ),
                       ),
                     ],
@@ -347,15 +419,27 @@ class _RewardCard extends StatelessWidget {
             ),
             if (isAvailable && canAfford)
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 6,
+                ),
                 decoration: BoxDecoration(
                   color: AppColors.primaryGreen,
                   borderRadius: BorderRadius.circular(12),
                 ),
-                child: Text('Redeem', style: AppTypography.labelSmall(context).copyWith(color: Colors.white)),
+                child: Text(
+                  'Redeem',
+                  style: AppTypography.labelSmall(
+                    context,
+                  ).copyWith(color: Colors.white),
+                ),
               )
             else if (!isAvailable)
-              Icon(Icons.lock_rounded, color: isDark ? Colors.white24 : AppColors.textHint, size: 20),
+              Icon(
+                Icons.lock_rounded,
+                color: isDark ? Colors.white24 : AppColors.textHint,
+                size: 20,
+              ),
           ],
         ),
       ),
@@ -379,7 +463,12 @@ class _RedeemConfirmationSheet extends StatelessWidget {
         color: Theme.of(context).scaffoldBackgroundColor,
         borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
       ),
-      padding: EdgeInsets.fromLTRB(24, 24, 24, MediaQuery.of(context).padding.bottom + 24),
+      padding: EdgeInsets.fromLTRB(
+        24,
+        24,
+        24,
+        MediaQuery.of(context).padding.bottom + 24,
+      ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -406,16 +495,26 @@ class _RedeemConfirmationSheet extends StatelessWidget {
               child: Image.network(
                 reward.imageUrl,
                 fit: BoxFit.cover,
-                errorBuilder: (_, __, ___) => const Icon(Icons.local_cafe, color: AppColors.primaryGreen, size: 40),
+                errorBuilder: (_, _, _) => const Icon(
+                  Icons.local_cafe,
+                  color: AppColors.primaryGreen,
+                  size: 40,
+                ),
               ),
             ),
           ),
           const SizedBox(height: 16),
-          Text(reward.title, style: AppTypography.headingSmall(context), textAlign: TextAlign.center),
+          Text(
+            reward.title,
+            style: AppTypography.headingSmall(context),
+            textAlign: TextAlign.center,
+          ),
           const SizedBox(height: 8),
           Text(
             reward.description,
-            style: AppTypography.bodyMedium(context).copyWith(color: AppColors.textSecondary),
+            style: AppTypography.bodyMedium(
+              context,
+            ).copyWith(color: AppColors.textSecondary),
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 24),
@@ -428,11 +527,17 @@ class _RedeemConfirmationSheet extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Icon(Icons.star_rounded, color: AppColors.starGold, size: 20),
+                const Icon(
+                  Icons.star_rounded,
+                  color: AppColors.starGold,
+                  size: 20,
+                ),
                 const SizedBox(width: 8),
                 Text(
                   '${reward.starCost} Stars will be deducted',
-                  style: AppTypography.labelMedium(context).copyWith(color: AppColors.primaryGreen),
+                  style: AppTypography.labelMedium(
+                    context,
+                  ).copyWith(color: AppColors.primaryGreen),
                 ),
               ],
             ),
@@ -451,7 +556,10 @@ class _RedeemConfirmationSheet extends StatelessWidget {
                       border: Border.all(color: AppColors.divider),
                     ),
                     child: Center(
-                      child: Text('Cancel', style: AppTypography.labelMedium(context)),
+                      child: Text(
+                        'Cancel',
+                        style: AppTypography.labelMedium(context),
+                      ),
                     ),
                   ),
                 ),
@@ -467,7 +575,12 @@ class _RedeemConfirmationSheet extends StatelessWidget {
                       borderRadius: BorderRadius.circular(16),
                     ),
                     child: Center(
-                      child: Text('Redeem Now', style: AppTypography.labelMedium(context).copyWith(color: Colors.white)),
+                      child: Text(
+                        'Redeem Now',
+                        style: AppTypography.labelMedium(
+                          context,
+                        ).copyWith(color: Colors.white),
+                      ),
                     ),
                   ),
                 ),
@@ -492,7 +605,7 @@ class _RedeemSuccessDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final redeemed = context.read<RewardsProvider>().redeemedRewards.last;
-    
+
     return Dialog(
       backgroundColor: Colors.transparent,
       child: Container(
@@ -511,15 +624,23 @@ class _RedeemSuccessDialog extends StatelessWidget {
                 color: AppColors.success,
                 shape: BoxShape.circle,
               ),
-              child: const Icon(Icons.check_rounded, color: Colors.white, size: 40),
+              child: const Icon(
+                Icons.check_rounded,
+                color: Colors.white,
+                size: 40,
+              ),
             ).animate().scale(duration: 400.ms, curve: Curves.elasticOut),
             const SizedBox(height: 20),
-            Text('Reward Redeemed!', style: AppTypography.headingMedium(context))
-                .animate().fadeIn(delay: 200.ms),
+            Text(
+              'Reward Redeemed!',
+              style: AppTypography.headingMedium(context),
+            ).animate().fadeIn(delay: 200.ms),
             const SizedBox(height: 8),
             Text(
               reward.title,
-              style: AppTypography.bodyLarge(context).copyWith(color: AppColors.primaryGreen),
+              style: AppTypography.bodyLarge(
+                context,
+              ).copyWith(color: AppColors.primaryGreen),
               textAlign: TextAlign.center,
             ).animate().fadeIn(delay: 300.ms),
             const SizedBox(height: 20),
@@ -531,14 +652,16 @@ class _RedeemSuccessDialog extends StatelessWidget {
               ),
               child: Column(
                 children: [
-                  Text('Redemption Code', style: AppTypography.labelSmall(context)),
+                  Text(
+                    'Redemption Code',
+                    style: AppTypography.labelSmall(context),
+                  ),
                   const SizedBox(height: 8),
                   Text(
                     redeemed.code,
-                    style: AppTypography.headingLarge(context).copyWith(
-                      color: AppColors.primaryGreen,
-                      letterSpacing: 2,
-                    ),
+                    style: AppTypography.headingLarge(
+                      context,
+                    ).copyWith(color: AppColors.primaryGreen, letterSpacing: 2),
                   ),
                   const SizedBox(height: 8),
                   Text(
@@ -554,7 +677,9 @@ class _RedeemSuccessDialog extends StatelessWidget {
               children: [
                 Text(
                   'Expires in ${redeemed.daysUntilExpiry} days',
-                  style: AppTypography.bodySmall(context).copyWith(color: AppColors.textSecondary),
+                  style: AppTypography.bodySmall(
+                    context,
+                  ).copyWith(color: AppColors.textSecondary),
                 ),
               ],
             ).animate().fadeIn(delay: 500.ms),
@@ -569,7 +694,12 @@ class _RedeemSuccessDialog extends StatelessWidget {
                   borderRadius: BorderRadius.circular(16),
                 ),
                 child: Center(
-                  child: Text('Done', style: AppTypography.labelMedium(context).copyWith(color: Colors.white)),
+                  child: Text(
+                    'Done',
+                    style: AppTypography.labelMedium(
+                      context,
+                    ).copyWith(color: Colors.white),
+                  ),
                 ),
               ),
             ).animate().fadeIn(delay: 600.ms),
@@ -588,7 +718,7 @@ class _RedeemedRewardsSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final redeemed = rewards.redeemedRewards;
-    
+
     return Container(
       height: MediaQuery.of(context).size.height * 0.7,
       decoration: BoxDecoration(
@@ -610,7 +740,10 @@ class _RedeemedRewardsSheet extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 16),
-                Text('My Redeemed Rewards', style: AppTypography.headingMedium(context)),
+                Text(
+                  'My Redeemed Rewards',
+                  style: AppTypography.headingMedium(context),
+                ),
               ],
             ),
           ),
@@ -620,13 +753,22 @@ class _RedeemedRewardsSheet extends StatelessWidget {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Icon(Icons.card_giftcard, size: 64, color: AppColors.textHint),
+                        const Icon(
+                          Icons.card_giftcard,
+                          size: 64,
+                          color: AppColors.textHint,
+                        ),
                         const SizedBox(height: 16),
-                        Text('No redeemed rewards yet', style: AppTypography.bodyLarge(context)),
+                        Text(
+                          'No redeemed rewards yet',
+                          style: AppTypography.bodyLarge(context),
+                        ),
                         const SizedBox(height: 8),
                         Text(
                           'Start redeeming to see your rewards here',
-                          style: AppTypography.bodyMedium(context).copyWith(color: AppColors.textSecondary),
+                          style: AppTypography.bodyMedium(
+                            context,
+                          ).copyWith(color: AppColors.textSecondary),
                         ),
                       ],
                     ),
@@ -635,7 +777,10 @@ class _RedeemedRewardsSheet extends StatelessWidget {
                     padding: const EdgeInsets.fromLTRB(16, 0, 16, 24),
                     itemCount: redeemed.length,
                     itemBuilder: (context, index) {
-                      final item = redeemed[redeemed.length - 1 - index]; // Reverse order
+                      final item =
+                          redeemed[redeemed.length -
+                              1 -
+                              index]; // Reverse order
                       return _RedeemedRewardItem(item: item);
                     },
                   ),
@@ -654,7 +799,7 @@ class _RedeemedRewardItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    
+
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
       padding: const EdgeInsets.all(16),
@@ -682,7 +827,11 @@ class _RedeemedRewardItem extends StatelessWidget {
                   child: Image.network(
                     item.reward.imageUrl,
                     fit: BoxFit.cover,
-                    errorBuilder: (_, __, ___) => const Icon(Icons.local_cafe, color: AppColors.primaryGreen, size: 24),
+                    errorBuilder: (_, _, _) => const Icon(
+                      Icons.local_cafe,
+                      color: AppColors.primaryGreen,
+                      size: 24,
+                    ),
                   ),
                 ),
               ),
@@ -691,12 +840,17 @@ class _RedeemedRewardItem extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(item.reward.title, style: AppTypography.labelMedium(context)),
+                    Text(
+                      item.reward.title,
+                      style: AppTypography.labelMedium(context),
+                    ),
                     const SizedBox(height: 4),
                     Text(
                       'Code: ${item.code}',
                       style: AppTypography.bodySmall(context).copyWith(
-                        color: isDark ? Colors.white70 : AppColors.textSecondary,
+                        color: isDark
+                            ? Colors.white70
+                            : AppColors.textSecondary,
                         fontFamily: 'monospace',
                       ),
                     ),
@@ -705,7 +859,10 @@ class _RedeemedRewardItem extends StatelessWidget {
               ),
               if (item.isUsed)
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 8,
+                    vertical: 4,
+                  ),
                   decoration: BoxDecoration(
                     color: AppColors.divider,
                     borderRadius: BorderRadius.circular(8),
@@ -714,26 +871,36 @@ class _RedeemedRewardItem extends StatelessWidget {
                 )
               else if (item.isExpired)
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 8,
+                    vertical: 4,
+                  ),
                   decoration: BoxDecoration(
                     color: AppColors.error.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Text(
                     'Expired',
-                    style: AppTypography.caption(context).copyWith(color: AppColors.error),
+                    style: AppTypography.caption(
+                      context,
+                    ).copyWith(color: AppColors.error),
                   ),
                 )
               else
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 8,
+                    vertical: 4,
+                  ),
                   decoration: BoxDecoration(
                     color: AppColors.success.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Text(
                     'Active',
-                    style: AppTypography.caption(context).copyWith(color: AppColors.success),
+                    style: AppTypography.caption(
+                      context,
+                    ).copyWith(color: AppColors.success),
                   ),
                 ),
             ],
@@ -748,11 +915,17 @@ class _RedeemedRewardItem extends StatelessWidget {
               ),
               child: Row(
                 children: [
-                  const Icon(Icons.access_time, size: 16, color: AppColors.primaryGreen),
+                  const Icon(
+                    Icons.access_time,
+                    size: 16,
+                    color: AppColors.primaryGreen,
+                  ),
                   const SizedBox(width: 8),
                   Text(
                     'Expires in ${item.daysUntilExpiry} days',
-                    style: AppTypography.caption(context).copyWith(color: AppColors.primaryGreen),
+                    style: AppTypography.caption(
+                      context,
+                    ).copyWith(color: AppColors.primaryGreen),
                   ),
                 ],
               ),

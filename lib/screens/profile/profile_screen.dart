@@ -14,7 +14,7 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    
+
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: CustomScrollView(
@@ -22,7 +22,12 @@ class ProfileScreen extends StatelessWidget {
           // Header
           SliverToBoxAdapter(
             child: Container(
-              padding: EdgeInsets.fromLTRB(24, MediaQuery.of(context).padding.top + 16, 24, 24),
+              padding: EdgeInsets.fromLTRB(
+                24,
+                MediaQuery.of(context).padding.top + 16,
+                24,
+                24,
+              ),
               color: Theme.of(context).scaffoldBackgroundColor,
               child: Column(
                 children: [
@@ -37,7 +42,9 @@ class ProfileScreen extends StatelessWidget {
                           shape: BoxShape.circle,
                           boxShadow: [
                             BoxShadow(
-                              color: AppColors.primaryGreen.withValues(alpha: 0.2),
+                              color: AppColors.primaryGreen.withValues(
+                                alpha: 0.2,
+                              ),
                               blurRadius: 12,
                               offset: const Offset(0, 4),
                             ),
@@ -47,39 +54,51 @@ class ProfileScreen extends StatelessWidget {
                           child: Image.network(
                             mockUser.avatarUrl,
                             fit: BoxFit.cover,
-                            errorBuilder: (_, __, ___) => const Icon(
+                            errorBuilder: (_, _, _) => const Icon(
                               Icons.person_rounded,
                               color: AppColors.primaryGreen,
                               size: 40,
                             ),
                           ),
                         ),
-                      ).animate().scale(duration: 500.ms, curve: Curves.elasticOut),
+                      ).animate().scale(
+                        duration: 500.ms,
+                        curve: Curves.elasticOut,
+                      ),
                       const SizedBox(width: 16),
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(mockUser.name, style: AppTypography.headingMedium(context))
-                                .animate().fadeIn(delay: 100.ms),
+                            Text(
+                              mockUser.name,
+                              style: AppTypography.headingMedium(context),
+                            ).animate().fadeIn(delay: 100.ms),
                             const SizedBox(height: 4),
                             Text(
                               'Member since ${mockUser.memberSince.year}',
                               style: AppTypography.bodyMedium(context).copyWith(
-                                color: isDark ? Colors.white70 : AppColors.textSecondary,
+                                color: isDark
+                                    ? Colors.white70
+                                    : AppColors.textSecondary,
                               ),
                             ).animate().fadeIn(delay: 150.ms),
                           ],
                         ),
                       ),
                       Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 10,
+                          vertical: 6,
+                        ),
                         decoration: BoxDecoration(
                           color: AppColors.secondaryGold,
                           borderRadius: BorderRadius.circular(12),
                           boxShadow: [
                             BoxShadow(
-                              color: AppColors.secondaryGold.withValues(alpha: 0.3),
+                              color: AppColors.secondaryGold.withValues(
+                                alpha: 0.3,
+                              ),
                               blurRadius: 8,
                               offset: const Offset(0, 2),
                             ),
@@ -88,9 +107,18 @@ class ProfileScreen extends StatelessWidget {
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            const Icon(Icons.star_rounded, color: Colors.white, size: 14),
+                            const Icon(
+                              Icons.star_rounded,
+                              color: Colors.white,
+                              size: 14,
+                            ),
                             const SizedBox(width: 4),
-                            Text(mockUser.tier, style: AppTypography.labelSmall(context).copyWith(color: Colors.white)),
+                            Text(
+                              mockUser.tier,
+                              style: AppTypography.labelSmall(
+                                context,
+                              ).copyWith(color: Colors.white),
+                            ),
                           ],
                         ),
                       ).animate().fadeIn(delay: 200.ms),
@@ -109,7 +137,9 @@ class ProfileScreen extends StatelessWidget {
               Container(
                 margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
                 decoration: BoxDecoration(
-                  color: isDark ? Theme.of(context).colorScheme.surface : AppColors.surface,
+                  color: isDark
+                      ? Theme.of(context).colorScheme.surface
+                      : AppColors.surface,
                   borderRadius: BorderRadius.circular(16),
                   boxShadow: [
                     BoxShadow(
@@ -127,14 +157,20 @@ class ProfileScreen extends StatelessWidget {
                       label: 'Order History',
                       onTap: () => context.push(RouteNames.orderHistory),
                     ),
-                    Divider(height: 1, color: isDark ? Colors.white10 : AppColors.divider),
+                    Divider(
+                      height: 1,
+                      color: isDark ? Colors.white10 : AppColors.divider,
+                    ),
                     _MenuItem(
                       icon: Icons.credit_card_rounded,
                       iconColor: AppColors.secondaryGold,
                       label: 'Payment Methods',
                       onTap: () {},
                     ),
-                    Divider(height: 1, color: isDark ? Colors.white10 : AppColors.divider),
+                    Divider(
+                      height: 1,
+                      color: isDark ? Colors.white10 : AppColors.divider,
+                    ),
                     _MenuItem(
                       icon: Icons.store_rounded,
                       iconColor: Colors.orange,
@@ -149,7 +185,9 @@ class ProfileScreen extends StatelessWidget {
               Container(
                 margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
                 decoration: BoxDecoration(
-                  color: isDark ? Theme.of(context).colorScheme.surface : AppColors.surface,
+                  color: isDark
+                      ? Theme.of(context).colorScheme.surface
+                      : AppColors.surface,
                   borderRadius: BorderRadius.circular(16),
                   boxShadow: [
                     BoxShadow(
@@ -168,24 +206,36 @@ class ProfileScreen extends StatelessWidget {
                       badge: '3',
                       onTap: () => context.push(RouteNames.notifications),
                     ),
-                    Divider(height: 1, color: isDark ? Colors.white10 : AppColors.divider),
+                    Divider(
+                      height: 1,
+                      color: isDark ? Colors.white10 : AppColors.divider,
+                    ),
                     _MenuItem(
                       icon: Icons.settings_rounded,
-                      iconColor: isDark ? Colors.white70 : AppColors.textSecondary,
+                      iconColor: isDark
+                          ? Colors.white70
+                          : AppColors.textSecondary,
                       label: 'Settings',
                       onTap: () => context.push(RouteNames.settings),
                     ),
-                    Divider(height: 1, color: isDark ? Colors.white10 : AppColors.divider),
+                    Divider(
+                      height: 1,
+                      color: isDark ? Colors.white10 : AppColors.divider,
+                    ),
                     Consumer<ThemeProvider>(
                       builder: (context, theme, _) {
                         return _MenuItem(
-                          icon: theme.isDark ? Icons.light_mode_rounded : Icons.dark_mode_rounded,
-                          iconColor: theme.isDark ? Colors.amber : Colors.indigo,
+                          icon: theme.isDark
+                              ? Icons.light_mode_rounded
+                              : Icons.dark_mode_rounded,
+                          iconColor: theme.isDark
+                              ? Colors.amber
+                              : Colors.indigo,
                           label: theme.isDark ? 'Light Mode' : 'Dark Mode',
                           trailing: Switch(
                             value: theme.isDark,
                             onChanged: (_) => theme.toggleTheme(),
-                            activeColor: AppColors.primaryGreen,
+                            activeThumbColor: AppColors.primaryGreen,
                           ),
                           onTap: () => theme.toggleTheme(),
                         );
@@ -199,7 +249,9 @@ class ProfileScreen extends StatelessWidget {
               Container(
                 margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
                 decoration: BoxDecoration(
-                  color: isDark ? Theme.of(context).colorScheme.surface : AppColors.surface,
+                  color: isDark
+                      ? Theme.of(context).colorScheme.surface
+                      : AppColors.surface,
                   borderRadius: BorderRadius.circular(16),
                   boxShadow: [
                     BoxShadow(
@@ -246,7 +298,7 @@ class _MenuItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    
+
     return ListTile(
       onTap: onTap,
       contentPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
@@ -260,31 +312,41 @@ class _MenuItem extends StatelessWidget {
         child: Icon(icon, color: iconColor, size: 20),
       ),
       title: Text(
-        label, 
-        style: AppTypography.bodyMedium(context).copyWith(
-          color: isDark ? Colors.white : AppColors.textPrimary,
-        ),
+        label,
+        style: AppTypography.bodyMedium(
+          context,
+        ).copyWith(color: isDark ? Colors.white : AppColors.textPrimary),
       ),
-      trailing: trailing ?? Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          if (badge != null)
-            Container(
-              margin: const EdgeInsets.only(right: 12),
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-              decoration: BoxDecoration(
-                color: AppColors.error,
-                borderRadius: BorderRadius.circular(10),
+      trailing:
+          trailing ??
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              if (badge != null)
+                Container(
+                  margin: const EdgeInsets.only(right: 12),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 8,
+                    vertical: 2,
+                  ),
+                  decoration: BoxDecoration(
+                    color: AppColors.error,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Text(
+                    badge!,
+                    style: AppTypography.caption(
+                      context,
+                    ).copyWith(color: Colors.white),
+                  ),
+                ),
+              Icon(
+                Icons.arrow_forward_ios_rounded,
+                size: 16,
+                color: isDark ? Colors.white30 : AppColors.textHint,
               ),
-              child: Text(badge!, style: AppTypography.caption(context).copyWith(color: Colors.white)),
-            ),
-          Icon(
-            Icons.arrow_forward_ios_rounded, 
-            size: 16, 
-            color: isDark ? Colors.white30 : AppColors.textHint,
+            ],
           ),
-        ],
-      ),
     );
   }
 }

@@ -33,4 +33,21 @@ class AuthProvider extends ChangeNotifier {
     _user = null;
     notifyListeners();
   }
+
+  // Simulated OTP flow for password reset
+  String? _lastOtp;
+
+  Future<void> sendPasswordResetOtp(String email) async {
+    // simulate network delay and OTP generation
+    await Future.delayed(const Duration(milliseconds: 1200));
+    // generate a 6-digit OTP (for simulation)
+    _lastOtp = (100000 + (DateTime.now().millisecondsSinceEpoch % 899999)).toString();
+    // In a real app, send OTP to user's email via backend
+    notifyListeners();
+  }
+
+  Future<bool> verifyPasswordResetOtp(String otp) async {
+    await Future.delayed(const Duration(milliseconds: 800));
+    return _lastOtp != null && otp.trim() == _lastOtp!.trim();
+  }
 }

@@ -33,14 +33,19 @@ class CartScreen extends StatelessWidget {
                   itemBuilder: (context, index) {
                     final item = cart.items[index];
                     return _CartItemTile(
-                      item: item,
-                      onUpdateQty: (q) => cart.updateQuantity(item.id, q),
-                      onDelete: () => cart.removeItem(item.id),
-                    ).animate(delay: (index * 50).ms).fadeIn().slideX(begin: 0.1, end: 0);
+                          item: item,
+                          onUpdateQty: (q) => cart.updateQuantity(item.id, q),
+                          onDelete: () => cart.removeItem(item.id),
+                        )
+                        .animate(delay: (index * 50).ms)
+                        .fadeIn()
+                        .slideX(begin: 0.1, end: 0);
                   },
                 ),
               ),
-              _PriceSummary(cart: cart).animate().fadeIn().slideY(begin: 0.2, end: 0),
+              _PriceSummary(
+                cart: cart,
+              ).animate().fadeIn().slideY(begin: 0.2, end: 0),
             ],
           );
         },
@@ -63,14 +68,24 @@ class _EmptyState extends StatelessWidget {
               color: AppColors.primaryGreenLight,
               shape: BoxShape.circle,
             ),
-            child: const Icon(Icons.shopping_bag_outlined, color: AppColors.primaryGreen, size: 48),
+            child: const Icon(
+              Icons.shopping_bag_outlined,
+              color: AppColors.primaryGreen,
+              size: 48,
+            ),
           ).animate().scale(duration: 600.ms, curve: Curves.elasticOut),
           const SizedBox(height: 24),
-          Text('Your cart is empty', style: AppTypography.headingMedium(context))
-              .animate().fadeIn(delay: 200.ms),
+          Text(
+            'Your cart is empty',
+            style: AppTypography.headingMedium(context),
+          ).animate().fadeIn(delay: 200.ms),
           const SizedBox(height: 8),
-          Text('Add some drinks to get started', style: AppTypography.bodyMedium(context).copyWith(color: AppColors.textSecondary))
-              .animate().fadeIn(delay: 250.ms),
+          Text(
+            'Add some drinks to get started',
+            style: AppTypography.bodyMedium(
+              context,
+            ).copyWith(color: AppColors.textSecondary),
+          ).animate().fadeIn(delay: 250.ms),
           const SizedBox(height: 32),
           AppButton.primary(
             label: 'Browse Menu',
@@ -126,11 +141,15 @@ class _CartItemTile extends StatelessWidget {
                 width: 70,
                 height: 70,
                 fit: BoxFit.cover,
-                errorWidget: (_, __, ___) => Container(
+                errorWidget: (_, _, _) => Container(
                   width: 70,
                   height: 70,
                   color: AppColors.primaryGreenLight,
-                  child: const Icon(Icons.local_cafe, color: AppColors.primaryGreen, size: 24),
+                  child: const Icon(
+                    Icons.local_cafe,
+                    color: AppColors.primaryGreen,
+                    size: 24,
+                  ),
                 ),
               ),
             ),
@@ -140,11 +159,24 @@ class _CartItemTile extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(item.drink.name, style: AppTypography.labelMedium(context), maxLines: 1, overflow: TextOverflow.ellipsis),
+                  Text(
+                    item.drink.name,
+                    style: AppTypography.labelMedium(context),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
                   const SizedBox(height: 2),
-                  Text('Size: ${item.size}', style: AppTypography.bodySmall(context).copyWith(color: AppColors.textSecondary)),
+                  Text(
+                    'Size: ${item.size}',
+                    style: AppTypography.bodySmall(
+                      context,
+                    ).copyWith(color: AppColors.textSecondary),
+                  ),
                   const SizedBox(height: 6),
-                  Text('\$${item.totalPrice.toStringAsFixed(2)}', style: AppTypography.price(context)),
+                  Text(
+                    '\$${item.totalPrice.toStringAsFixed(2)}',
+                    style: AppTypography.price(context),
+                  ),
                 ],
               ),
             ),
@@ -160,11 +192,15 @@ class _CartItemTile extends StatelessWidget {
                     icon: const Icon(Icons.remove_rounded, size: 18),
                     onPressed: () => onUpdateQty(item.quantity - 1),
                     padding: EdgeInsets.zero,
-                    constraints: const BoxConstraints(minWidth: 36, minHeight: 36),
+                    constraints: const BoxConstraints(
+                      minWidth: 36,
+                      minHeight: 36,
+                    ),
                   ),
                   AnimatedSwitcher(
                     duration: const Duration(milliseconds: 200),
-                    transitionBuilder: (child, anim) => ScaleTransition(scale: anim, child: child),
+                    transitionBuilder: (child, anim) =>
+                        ScaleTransition(scale: anim, child: child),
                     child: SizedBox(
                       width: 24,
                       child: Text(
@@ -179,7 +215,10 @@ class _CartItemTile extends StatelessWidget {
                     icon: const Icon(Icons.add_rounded, size: 18),
                     onPressed: () => onUpdateQty(item.quantity + 1),
                     padding: EdgeInsets.zero,
-                    constraints: const BoxConstraints(minWidth: 36, minHeight: 36),
+                    constraints: const BoxConstraints(
+                      minWidth: 36,
+                      minHeight: 36,
+                    ),
                   ),
                 ],
               ),
@@ -203,7 +242,13 @@ class _PriceSummary extends StatelessWidget {
       decoration: BoxDecoration(
         color: AppColors.surface,
         borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
-        boxShadow: [BoxShadow(color: AppColors.cardShadow, blurRadius: 12, offset: const Offset(0, -4))],
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.cardShadow,
+            blurRadius: 12,
+            offset: const Offset(0, -4),
+          ),
+        ],
       ),
       child: SafeArea(
         child: Column(
@@ -212,16 +257,32 @@ class _PriceSummary extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Subtotal', style: AppTypography.bodyMedium(context).copyWith(color: AppColors.textSecondary)),
-                Text('\$${cart.subtotal.toStringAsFixed(2)}', style: AppTypography.bodyMedium(context)),
+                Text(
+                  'Subtotal',
+                  style: AppTypography.bodyMedium(
+                    context,
+                  ).copyWith(color: AppColors.textSecondary),
+                ),
+                Text(
+                  '\$${cart.subtotal.toStringAsFixed(2)}',
+                  style: AppTypography.bodyMedium(context),
+                ),
               ],
             ),
             const SizedBox(height: 8),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Tax (8.75%)', style: AppTypography.bodyMedium(context).copyWith(color: AppColors.textSecondary)),
-                Text('\$${cart.tax.toStringAsFixed(2)}', style: AppTypography.bodyMedium(context)),
+                Text(
+                  'Tax (8.75%)',
+                  style: AppTypography.bodyMedium(
+                    context,
+                  ).copyWith(color: AppColors.textSecondary),
+                ),
+                Text(
+                  '\$${cart.tax.toStringAsFixed(2)}',
+                  style: AppTypography.bodyMedium(context),
+                ),
               ],
             ),
             const Divider(height: 24),
@@ -229,7 +290,10 @@ class _PriceSummary extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text('Total', style: AppTypography.headingMedium(context)),
-                Text('\$${cart.total.toStringAsFixed(2)}', style: AppTypography.priceLarge(context)),
+                Text(
+                  '\$${cart.total.toStringAsFixed(2)}',
+                  style: AppTypography.priceLarge(context),
+                ),
               ],
             ),
             const SizedBox(height: 16),
