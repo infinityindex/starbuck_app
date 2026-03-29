@@ -80,20 +80,20 @@ class _SignupScreenState extends State<SignupScreen> {
       width: 28,
       height: 28,
       decoration: BoxDecoration(
-        color: isActive || isCompleted ? colorScheme.primary : colorScheme.surfaceContainerHighest,
+        color: isActive || isCompleted
+            ? colorScheme.primary
+            : colorScheme.surfaceContainerHighest,
         shape: BoxShape.circle,
       ),
       child: Center(
         child: isCompleted
-            ? Icon(
-                LucideIcons.check,
-                color: colorScheme.onPrimary,
-                size: 14,
-              )
+            ? Icon(LucideIcons.check, color: colorScheme.onPrimary, size: 14)
             : Text(
                 '${index + 1}',
                 style: TextStyle(
-                  color: isActive ? colorScheme.onPrimary : colorScheme.onSurfaceVariant,
+                  color: isActive
+                      ? colorScheme.onPrimary
+                      : colorScheme.onSurfaceVariant,
                   fontWeight: FontWeight.w600,
                   fontSize: 12,
                 ),
@@ -211,4 +211,3 @@ class _SignupScreenState extends State<SignupScreen> {
     );
   }
 }
-

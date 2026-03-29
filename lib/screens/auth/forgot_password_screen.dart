@@ -191,37 +191,75 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
           ),
         ),
         const SizedBox(height: 12),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: List.generate(6, (i) {
-            return SizedBox(
-              width: 56,
-              height: 56,
-              child: TextField(
-                controller: _pinControllers[i],
-                focusNode: _pinFocus[i],
-                keyboardType: TextInputType.number,
-                textAlign: TextAlign.center,
-                textAlignVertical: TextAlignVertical.center,
-                maxLength: 1,
-                maxLines: 1,
-                style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w600,
-                ),
-                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                decoration: InputDecoration(
-                  isDense: true,
-                  counterText: '',
-                  contentPadding: const EdgeInsets.symmetric(vertical: 12),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
+        LayoutBuilder(
+          builder: (context, constraints) {
+            const int count = 6;
+            const double maxBox = 56.0;
+            const double minBox = 40.0;
+            const double gap = 12.0;
+
+            final double maxWidth = constraints.maxWidth;
+            final double totalGap = gap * (count - 1);
+            double boxWidth = (maxWidth - totalGap) / count;
+            if (boxWidth > maxBox) boxWidth = maxBox;
+            if (boxWidth < minBox) boxWidth = minBox;
+
+            final bool needScroll = (boxWidth * count + totalGap) > maxWidth;
+
+            final List<Widget> items = [];
+            for (int i = 0; i < count; i++) {
+              items.add(
+                SizedBox(
+                  width: boxWidth,
+                  height: 56,
+                  child: TextField(
+                    controller: _pinControllers[i],
+                    focusNode: _pinFocus[i],
+                    keyboardType: TextInputType.number,
+                    textAlign: TextAlign.center,
+                    textAlignVertical: TextAlignVertical.center,
+                    maxLength: 1,
+                    maxLines: 1,
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600,
+                    ),
+                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                    decoration: InputDecoration(
+                      isDense: true,
+                      counterText: '',
+                      contentPadding: const EdgeInsets.symmetric(vertical: 12),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
+                    onChanged: (v) => _onPinChanged(i, v),
                   ),
                 ),
-                onChanged: (v) => _onPinChanged(i, v),
-              ),
+              );
+
+              if (i < count - 1) {
+                items.add(const SizedBox(width: gap));
+              }
+            }
+
+            final row = Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: items,
             );
-          }),
+
+            if (needScroll) {
+              return SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  child: row,
+                ),
+              );
+            }
+
+            return row;
+          },
         ),
         const SizedBox(height: 12),
         FilledButton(

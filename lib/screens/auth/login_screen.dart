@@ -30,9 +30,9 @@ class _LoginScreenState extends State<LoginScreen> {
   Future<void> _signIn() async {
     setState(() => _isLoading = true);
     await context.read<AuthProvider>().signIn(
-          _emailController.text,
-          _passwordController.text,
-        );
+      _emailController.text,
+      _passwordController.text,
+    );
     if (mounted) context.go(RouteNames.home);
   }
 
@@ -53,19 +53,23 @@ class _LoginScreenState extends State<LoginScreen> {
                 children: [
                   const SizedBox(height: 32),
                   Center(
-                    child: Container(
-                      width: 80,
-                      height: 80,
-                      decoration: BoxDecoration(
-                        color: colorScheme.primaryContainer,
-                        shape: BoxShape.circle,
-                      ),
-                      child: Icon(
-                        LucideIcons.coffee,
-                        color: colorScheme.onPrimaryContainer,
-                        size: 40,
-                      ),
-                    ).animate().scale(duration: 600.ms, curve: Curves.elasticOut),
+                    child:
+                        Container(
+                          width: 80,
+                          height: 80,
+                          decoration: BoxDecoration(
+                            color: colorScheme.primaryContainer,
+                            shape: BoxShape.circle,
+                          ),
+                          child: Icon(
+                            LucideIcons.coffee,
+                            color: colorScheme.onPrimaryContainer,
+                            size: 40,
+                          ),
+                        ).animate().scale(
+                          duration: 600.ms,
+                          curve: Curves.elasticOut,
+                        ),
                   ),
                   const SizedBox(height: 32),
                   Text(
@@ -106,9 +110,13 @@ class _LoginScreenState extends State<LoginScreen> {
                       prefixIcon: const Icon(LucideIcons.lock),
                       suffixIcon: IconButton(
                         icon: Icon(
-                          _obscurePassword ? LucideIcons.eyeOff : LucideIcons.eye,
+                          _obscurePassword
+                              ? LucideIcons.eyeOff
+                              : LucideIcons.eye,
                         ),
-                        onPressed: () => setState(() => _obscurePassword = !_obscurePassword),
+                        onPressed: () => setState(
+                          () => _obscurePassword = !_obscurePassword,
+                        ),
                       ),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12),
@@ -164,7 +172,11 @@ class _LoginScreenState extends State<LoginScreen> {
                     children: [
                       Expanded(
                         child: _SocialButton(
-                          iconWidget: SvgPicture.asset('assets/icons/google.svg', width: 20, height: 20),
+                          iconWidget: SvgPicture.asset(
+                            'assets/icons/google.svg',
+                            width: 20,
+                            height: 20,
+                          ),
                           label: 'Google',
                           onTap: _signIn,
                         ),
@@ -172,7 +184,11 @@ class _LoginScreenState extends State<LoginScreen> {
                       const SizedBox(width: 12),
                       Expanded(
                         child: _SocialButton(
-                          iconWidget: SvgPicture.asset('assets/icons/apple.svg', width: 20, height: 20),
+                          iconWidget: SvgPicture.asset(
+                            'assets/icons/apple.svg',
+                            width: 20,
+                            height: 20,
+                          ),
                           label: 'Apple',
                           onTap: _signIn,
                         ),
@@ -223,17 +239,11 @@ class _SocialButton extends StatelessWidget {
       onPressed: onTap,
       style: OutlinedButton.styleFrom(
         padding: const EdgeInsets.symmetric(vertical: 14),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          iconWidget,
-          const SizedBox(width: 12),
-          Text(label),
-        ],
+        children: [iconWidget, const SizedBox(width: 12), Text(label)],
       ),
     );
   }

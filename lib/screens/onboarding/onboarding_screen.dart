@@ -49,7 +49,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   void _goNext() {
     if (_currentPage < _pages.length - 1) {
-      _pageController.nextPage(duration: const Duration(milliseconds: 400), curve: Curves.easeInOut);
+      _pageController.nextPage(
+        duration: const Duration(milliseconds: 400),
+        curve: Curves.easeInOut,
+      );
     } else {
       context.go(RouteNames.login);
     }
@@ -69,7 +72,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             color: surface,
             borderRadius: const BorderRadius.vertical(top: Radius.circular(28)),
             boxShadow: [
-              BoxShadow(color: Colors.black.withOpacity(0.08), blurRadius: 12, offset: const Offset(0, -6)),
+              BoxShadow(
+                color: Colors.black.withOpacity(0.08),
+                blurRadius: 12,
+                offset: const Offset(0, -6),
+              ),
             ],
           ),
           child: Column(
@@ -82,9 +89,17 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   key: ValueKey<int>(_currentPage),
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(_pages[_currentPage].title, style: AppTypography.displayMedium(context)),
+                    Text(
+                      _pages[_currentPage].title,
+                      style: AppTypography.displayMedium(context),
+                    ),
                     const SizedBox(height: 8),
-                    Text(_pages[_currentPage].subtitle, style: AppTypography.bodyLarge(context).copyWith(color: AppColors.textSecondary)),
+                    Text(
+                      _pages[_currentPage].subtitle,
+                      style: AppTypography.bodyLarge(
+                        context,
+                      ).copyWith(color: AppColors.textSecondary),
+                    ),
                   ],
                 ),
               ),
@@ -112,7 +127,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     borderRadius: BorderRadius.circular(12),
                   ),
                 ),
-                child: Text(_currentPage == _pages.length - 1 ? 'Get Started' : 'Next'),
+                child: Text(
+                  _currentPage == _pages.length - 1 ? 'Get Started' : 'Next',
+                ),
               ),
             ],
           ),
@@ -124,7 +141,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         onPageChanged: (i) => setState(() => _currentPage = i),
         itemBuilder: (context, index) {
           final page = _pages[index];
-          return _OnboardingPage(data: page, index: index, controller: _pageController);
+          return _OnboardingPage(
+            data: page,
+            index: index,
+            controller: _pageController,
+          );
         },
       ),
     );
@@ -136,27 +157,43 @@ class _OnboardingData {
   final String subtitle;
   final String imageUrl;
   final List<Color> gradient;
-  const _OnboardingData({required this.title, required this.subtitle, required this.imageUrl, required this.gradient});
+  const _OnboardingData({
+    required this.title,
+    required this.subtitle,
+    required this.imageUrl,
+    required this.gradient,
+  });
 }
 
 class _OnboardingPage extends StatelessWidget {
   final _OnboardingData data;
   final int index;
   final PageController controller;
-  const _OnboardingPage({required this.data, required this.index, required this.controller});
+  const _OnboardingPage({
+    required this.data,
+    required this.index,
+    required this.controller,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Stack(
       fit: StackFit.expand,
       children: [
-        Image.network(data.imageUrl, fit: BoxFit.cover, errorBuilder: (_, __, ___) => const SizedBox.shrink()),
+        Image.network(
+          data.imageUrl,
+          fit: BoxFit.cover,
+          errorBuilder: (_, __, ___) => const SizedBox.shrink(),
+        ),
         Container(
           decoration: BoxDecoration(
             gradient: LinearGradient(
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
-              colors: [data.gradient.first.withOpacity(0.45), Colors.transparent],
+              colors: [
+                data.gradient.first.withOpacity(0.45),
+                Colors.transparent,
+              ],
             ),
           ),
         ),
